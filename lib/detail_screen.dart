@@ -144,6 +144,27 @@ class DetailMobilePage extends StatelessWidget {
               ),
             ),
             Container(
+              margin: const EdgeInsets.symmetric(vertical: 16.0),
+              child: const CounterButton(),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  backgroundColor: Colors.yellow,
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 48),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text("Add To Cart"),
+              ),
+            ),
+            Container(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 meal.strInstructions,
@@ -213,6 +234,26 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                 ),
                               ),
                               const SizedBox(height: 16),
+                              const CounterButton(),
+                              Container(
+                                margin: const EdgeInsets.only(top: 20),
+                                padding: const EdgeInsets.only(top: 20),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    backgroundColor: Colors.yellow,
+                                    foregroundColor: Colors.white,
+                                    minimumSize:
+                                        const Size(double.infinity, 48),
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(16)),
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                  child: const Text("Add To Cart"),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -238,7 +279,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                     children: [
                                       Row(
                                         children: <Widget>[
-                                          const Icon(Icons.calendar_today),
+                                          const Icon(Icons.restaurant),
                                           const SizedBox(width: 8.0),
                                           Text(
                                             widget.meal.strCategory,
@@ -251,7 +292,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                   ),
                                   Row(
                                     children: <Widget>[
-                                      const Icon(Icons.access_time),
+                                      const Icon(Icons.flag),
                                       const SizedBox(width: 8.0),
                                       Text(
                                         widget.meal.strArea,
@@ -262,7 +303,7 @@ class _DetailWebPageState extends State<DetailWebPage> {
                                   const SizedBox(height: 8.0),
                                   Row(
                                     children: <Widget>[
-                                      const Icon(Icons.monetization_on),
+                                      const Icon(Icons.badge),
                                       const SizedBox(width: 8.0),
                                       Text(
                                         widget.meal.idMeal,
@@ -301,6 +342,99 @@ class _DetailWebPageState extends State<DetailWebPage> {
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+}
+
+class CounterButton extends StatefulWidget {
+  const CounterButton({Key? key}) : super(key: key);
+
+  @override
+  _CounterButtonState createState() => _CounterButtonState();
+}
+
+class _CounterButtonState extends State<CounterButton> {
+  int counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (counter != 0) {
+        counter--;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 6),
+                blurRadius: 10,
+                color: const Color(0xFFB0B0B0).withOpacity(0.2),
+              ),
+            ],
+          ),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFFFF7643),
+              padding: EdgeInsets.zero,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ),
+            onPressed: _decrementCounter,
+            child: Icon(Icons.remove, color: Colors.black),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text(
+            '$counter',
+            style: TextStyle(fontSize: 24.0),
+          ),
+        ),
+        Container(
+          height: 40,
+          width: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                offset: const Offset(0, 6),
+                blurRadius: 10,
+                color: const Color(0xFFB0B0B0).withOpacity(0.2),
+              ),
+            ],
+          ),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFFFF7643),
+              padding: EdgeInsets.zero,
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ),
+            onPressed: _incrementCounter,
+            child: Icon(Icons.add, color: Colors.black),
+          ),
+        ),
+      ],
+    );
   }
 }
 
