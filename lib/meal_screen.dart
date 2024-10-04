@@ -45,14 +45,11 @@ class _MainScreenState extends State<MainScreen> {
           FutureBuilder<List<Area>>(
             future: futureArea,
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                // sedang menunggu atau fetching data
+              if (snapshot.connectionState == ConnectionState.waiting) {                
                 return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                // jika error
+              } else if (snapshot.hasError) {                
                 return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (snapshot.hasData) {
-                // sedang ada data
+              } else if (snapshot.hasData) {                
                 final areas = snapshot.data!;
 
                 return Padding(
@@ -130,14 +127,16 @@ class MealGrid extends StatelessWidget {
   const MealGrid({Key? key, required this.gridCount, required this.meals})
       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
+@override
+Widget build(BuildContext context) {
+  return Expanded(
+    child: Padding(
       padding: const EdgeInsets.all(24.0),
       child: GridView.count(
         crossAxisCount: gridCount,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
+        shrinkWrap: true,
         children: meals.map((meal) {
           return InkWell(
             onTap: () {
@@ -154,18 +153,19 @@ class MealGrid extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16.0),
                 child: Column(
-                  children: <Widget>[
-                    // Image section
-                    AspectRatio(
-                      aspectRatio: 2,
-                      child: Image.network(
-                        meal.thumbnail,
-                        fit: BoxFit.cover,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[                    
+                    Expanded(
+                      child: AspectRatio(
+                        aspectRatio: 2,
+                        child: Image.network(
+                          meal.thumbnail,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    // Data section
+                    ),                    
                     Padding(
-                      padding: const EdgeInsets.all(8.0), // Reduced padding
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -173,17 +173,16 @@ class MealGrid extends StatelessWidget {
                             meal.name,
                             style: const TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 16, // Adjust font size for better fit
+                              fontSize: 16,
                             ),
-                            overflow: TextOverflow.ellipsis, // Prevent overflow
-                            maxLines: 1, // Limit to one line
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
                           ),
-                          const SizedBox(
-                              height: 4), // Space between name and ID
+                          const SizedBox(height: 4),
                           Text(
                             'Meal ID: ${meal.id}',
                             style: TextStyle(
-                              fontSize: 12, // Smaller font size
+                              fontSize: 12,
                               color: Colors.grey.withOpacity(0.8),
                             ),
                           ),
@@ -197,8 +196,10 @@ class MealGrid extends StatelessWidget {
           );
         }).toList(),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }
 
 class MealList extends StatelessWidget {
@@ -230,16 +231,14 @@ class MealList extends StatelessWidget {
                 child: Stack(
                   children: <Widget>[
                     Column(
-                      children: <Widget>[
-                        // Image section
+                      children: <Widget>[                        
                         AspectRatio(
                           aspectRatio: 2,
                           child: Image.network(
                             meal.thumbnail,
                             fit: BoxFit.cover,
                           ),
-                        ),
-                        // Data section
+                        ),                        
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
@@ -253,7 +252,7 @@ class MealList extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(
-                                  height: 4), // Space between name and ID
+                                height: 4), 
                               Text(
                                 'Meal ID: ${meal.id}',
                                 style: TextStyle(
@@ -265,8 +264,7 @@ class MealList extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-                    // Favorite icon positioned at the top right
+                    ),                    
                     Positioned(
                       top: 8,
                       right: 8,
@@ -276,15 +274,14 @@ class MealList extends StatelessWidget {
                           borderRadius: const BorderRadius.all(
                             Radius.circular(32.0),
                           ),
-                          onTap: () {
-                            // Handle favorite action
+                          onTap: () {                            
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.restaurant,
                               color:
-                                  Colors.yellow, // Change to your desired color
+                                Colors.yellow, 
                             ),
                           ),
                         ),
